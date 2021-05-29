@@ -1,0 +1,10 @@
+{
+    "manifest_version":2,
+    "name": "sMath",
+    "description": "It is an extension that helps users to search mathematical queries. You can use mathematical symbols (like integrals, square etc.) in a browser's search bar.",
+    "version": "1.0",
+    "author": "Abhradeep Chakraborty",
+    "browser_action": {
+            "default_popup": "src/popup.html"
+        }
+}
