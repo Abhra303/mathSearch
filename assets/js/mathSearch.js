@@ -1,11 +1,11 @@
-console.log('hello');
-import decoder from 'decoder.js';
+console.log("hello");
+import decoder from "decoder.js";
 
-window.onload = e => {
-    let submitButton = document.getElementById('submit');
+window.onload = () => {
+    let submitButton = document.getElementById("submit");
 
-    submitButton.onclick = event => {
-        let searchedText = document.getElementById('searchedText').innerText;
+    submitButton.onclick = () => {
+        let searchedText = document.getElementById("searchedText").innerText;
         console.log(searchedText);
 
         // todo: make a file that contains all the symbols
@@ -14,8 +14,8 @@ window.onload = e => {
             decoder(searchedText);
         }
         else {
-            windows.alert('please enter the text in the input area');
+            window.alert("please enter the text in the input area");
         }
 
-    }
-}
+    };
+};
