@@ -1,0 +1,23 @@
+{
+  "name": "mathematical-search-extension",
+  "version": "1.0.0",
+  "description": "\" This is a web extension for searching text that includes mathematical expressions\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abhra303/mathSearch.git"
+  },
+  "keywords": [
+    "web-extension",
+    "math-search"
+  ],
+  "author": "\"Abhradeep Chakraborty\"",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Abhra303/mathSearch/issues"
+  },
+  "homepage": "https://github.com/Abhra303/mathSearch#readme"
+}
