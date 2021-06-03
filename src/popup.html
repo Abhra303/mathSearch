@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../assets/mathSearch.js"></script>
+    <link rel="stylesheet" href="../node_modules/katex/dist/katex.min.css"/>
+    <script src="../assets/js/mathSearch.js" type="module"></script>
     <title>Search extension</title>
 </head>
 <body>
     <h1>Welcome to math search extension </h1>
     <hr/>
     <h4>Write the mathematical expression that you want to search</h4>
+    <div id='result'></div>
     <input type='text' id='searchedText'/>
     <input type="submit" value="Search" id='submit'/>
 </body>
