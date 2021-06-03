@@ -2,7 +2,7 @@
   "name": "mathematical-search-extension",
   "version": "1.0.0",
   "description": "\" This is a web extension for searching text that includes mathematical expressions\"",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
     "lint-js": "./node_modules/.bin/eslint \"assets/js/**/*.js\" gulpfile.js",
     "lint-json": "./node_modules/.bin/eslint \"manifest.json\"",
@@ -27,5 +27,8 @@
     "eslint-plugin-json": "^3.0.0",
     "gulp": "^4.0.2",
     "stylelint": "^13.13.1"
+  },
+  "dependencies": {
+    "katex": "^0.13.11"
   }
 }
