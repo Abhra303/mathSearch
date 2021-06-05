@@ -6,5 +6,12 @@
     "author": "Abhradeep Chakraborty",
     "browser_action": {
             "default_popup": "src/popup.html"
+        },
+    "content_scripts": [
+        {
+            "matches": ["*://www.google.com/search"],
+            "js": [ "assets/js/search.js"],
+            "run_at": "document_end"
         }
+        ]
 }
