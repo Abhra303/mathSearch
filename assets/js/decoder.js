@@ -1,96 +1,61 @@
 import katex from "../../node_modules/katex/dist/katex.mjs";
 
-class Queue extends Array {
-    enqueue(val) {
-        this.push(val);
+
+let resultDiv = document.getElementById("result");
+let texExpression = [];
+let lastWasDollar = false;
+let recentTexWrapOpener = null; // stores the index of the latest discovered "${"
+let texLikelyToEnd = false;
+
+export default function decoder(letter) {
+
+    console.log(letter);
+    resultDiv.innerHTML += letter;
+    let text = resultDiv.innerHTML;
+    if (recentTexWrapOpener === null && letter === "$") {
+        lastWasDollar = true;
+        console.log("lastWasDollar is ", lastWasDollar);
+        return;
     }
-
-    dequeue() {
-        return this.shift();
-    }
-
-    peek() {
-        return this[0];
-    }
-
-    isEmpty() {
-        return this.length === 0;
-    }
-}
-
-
-export default function decoder(text) {
-    // let htmlExpression = katex.renderToString(text, {
-    //     throwOnError: false,
-    // });
-    let queue = new Queue();
-    let lastIsDollar = false;
-    let finish = false;
-    let isKatexIdentifier = false;
-    let finalText = [];
-    let katexExpression = [];
-    console.log(text);
-
-    Array.from(text).forEach((letter, index) => {
-        // console.log(letter, index);
-        if (letter === "$") {
-            lastIsDollar = true;
-            queue.enqueue(letter);
+    else if (lastWasDollar && letter === "{") {
+        if (!recentTexWrapOpener) {
+            recentTexWrapOpener = text.length - 2;
+            console.log("recentTexWrapOpener is ", recentTexWrapOpener);
+            
         }
-        else if (!isKatexIdentifier && lastIsDollar) {
-            lastIsDollar = false;
-            if (letter === "{") {
-                isKatexIdentifier = true;
-                queue.enqueue(letter);
+        if (recentTexWrapOpener && recentTexWrapOpener !== text.length - 2) {
+            while ( !texExpression.length) {
+                texExpression.pop();
             }
-            else {
-                if (!finish) {
-                    finalText.push("$");
-                }
-                finalText.push(letter);
-            }
+            recentTexWrapOpener = text.length - 2;
         }
-        else if (isKatexIdentifier) {
-            if (lastIsDollar && letter === "{") {
-                while (!queue.isEmpty()) {
-                    finalText.push(queue.dequeue());
-                }
-                while (!katexExpression.length) {
-                    katexExpression.pop();
-                }
-                lastIsDollar = false;
-            }
-            else if (letter === "}" && text[index + 1] === "$") {
-                isKatexIdentifier = false;
-                katexExpression = katex.renderToString(katexExpression.join(""), {
-                    throwOnError: false,
-                });
-                finalText.push(katexExpression);
-                finish = true;
-                // while(!queue.isEmpty()) {
-                //     queue.dequeue();
-                // }
-            }
-            else {
-                katexExpression.push(letter);
-                queue.enqueue(letter);
-                lastIsDollar = false;
+    }
+    else if (recentTexWrapOpener !== null) {
+        if (letter === "}") {
+            texLikelyToEnd = true;
+            texExpression.push(letter);
+        }
+        else if (texLikelyToEnd && letter === "$") {
+            texExpression.pop();
+            let texExpressionStr = texExpression.join("");
+            console.log("texExpressionstr is ", texExpressionStr);
+            let texResult = katex.renderToString(texExpressionStr, {
+                throwOnError: false,
+            });
+            let arr = Array.from(text);
+            arr = arr.slice(0, recentTexWrapOpener);
+            arr.push(texResult);
+            console.log("arr is ", arr);
+            resultDiv.innerHTML = arr.join("");
+            recentTexWrapOpener = null;
+            while(texExpression.length) {
+                texExpression.pop();
             }
         }
         else {
-            finalText.push(letter);
+            texExpression.push(letter);
         }
     }
-    );
-    console.log(finalText);
-    let resultDiv = document.getElementById("result");
-    resultDiv.innerHTML = finalText.join("");
-    console.log(resultDiv.innerHTML);
-    // katex.render(text, resultDiv, {
-    //     throwOnError: false,
-    // })
-    console.log(resultDiv.innerHTML);
-    // let URL = `https://www.google.com/search?q=${finalText}`
-    // window.open(URL,"_blank");
+    lastWasDollar = false;
 
 }
