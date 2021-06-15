@@ -1,11 +1,11 @@
-console.log("hello");
 import decoder from "./decoder.js";
 
 window.onload = () => {
     let submitButton = document.getElementById("submit");
     let searchedTextField = document.getElementById("searchedText");
     
-    searchedTextField.onkeypress = e => {
+    searchedTextField.onkeyup = e => {
+        console.log(e);
         decoder(e.key);
     };
     submitButton.onclick = () => {
