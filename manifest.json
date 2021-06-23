@@ -13,5 +13,8 @@
             "js": [ "assets/js/search.js"],
             "run_at": "document_end"
         }
-        ]
+        ],
+    "permissions": [
+        "*://www.google.com/search"
+    ]
 }
